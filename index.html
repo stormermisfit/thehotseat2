@@ -8,7 +8,6 @@
     :root{
       --bg1:#0b1020;
       --bg2:#111a33;
-      --card: rgba(255,255,255,.08);
       --stroke: rgba(255,255,255,.16);
       --text:#f2f4ff;
       --muted:#b9c2e6;
@@ -193,27 +192,24 @@
       color: var(--text);
     }
 
-    /* Cute little “shuffle” animation */
-    .pop{
-      animation: pop .22s ease;
-    }
+    .pop{ animation: pop .22s ease; }
     @keyframes pop{
       from { transform: translateY(6px); opacity:.65; }
       to   { transform: translateY(0); opacity:1; }
     }
 
-    /* Optional: respect reduced motion */
     @media (prefers-reduced-motion: reduce){
       .pop{ animation:none; }
       button{ transition:none; }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="top">
       <div>
-        <h1>EAP Video Plan: The HOT Seat </h1>
+        <h1>EAP Video Plan: The HOT Seat</h1>
         <p class="sub">Click to get a question. Answer clearly. Repeat until everyone survives.</p>
       </div>
       <div class="badge" id="counter">Picked: 0</div>
@@ -232,8 +228,8 @@
         </p>
 
         <div class="actions">
-          <button class="primary" id="pickBtn">Pick a question</button>
-          <button class="ghost" id="copyBtn">Copy</button>
+          <button class="primary" id="pickBtn" type="button">Pick a question</button>
+          <button class="ghost" id="copyBtn" type="button">Copy</button>
         </div>
       </div>
     </section>
@@ -244,6 +240,7 @@
     </div>
   </div>
 
+  <!-- IMPORTANT: all JS stays inside this script tag -->
   <script>
     const questions = [
       "Which topic have you chosen?",
@@ -255,6 +252,7 @@
       "What’s your most useful source? Why?",
       "What visuals will you show in your video?",
       "How will you use ethos, pathos and logos?",
+      "What techniques are you going to use to engage your audience?",
       "How will you conclude your video?",
       "What is your opening in the introduction?",
       "What counter-arguments will you include?",
@@ -271,81 +269,63 @@
 
     let picks = 0;
 
-    <script>
-  function hintFor(question){
-    const q = question.toLowerCase();
+    function hintFor(question){
+      const q = question.toLowerCase();
 
-    // Tailored EAP-friendly tips (simple, direct, B2)
-    if (q.includes("topic")) {
-      return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
-    }
+      if (q.includes("topic")) {
+        return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
+      }
+      if (q.includes("thesis")) {
+        return `Tip: A thesis is your main claim in one clear sentence. Use frames like “This video argues that…” or “I believe X because…”`;
+      }
+      if (q.includes("3 main arguments")) {
+        return `Tip: Keep each argument to one main point. Use signposting: “First…, Second…, Finally…”.`;
+      }
+      if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
+        return `Tip: State the point, then add one reason and one example (real or researched).`;
+      }
+      if (q.includes("most useful source")) {
+        return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
+      }
+      if (q.includes("visual")) {
+        return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
+      }
+      if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
+        return `Tip: Ethos = credibility, Pathos = emotion, Logos = logic. Give one example of each.`;
+      }
+      if (q.includes("engage")) {
+        return `Tip: Use a question, a surprising fact, or a short story. Change pace every 10–15 seconds.`;
+      }
+      if (q.includes("conclude")) {
+        return `Tip: Restate your thesis, summarise your 3 points in one line, then finish with a final message or call to action.`;
+      }
+      if (q.includes("opening") || q.includes("introduction")) {
+        return `Tip: Start strong: a surprising fact, a question, or a quick story. Then give the outline and your thesis.`;
+      }
+      if (q.includes("counter")) {
+        return `Tip: Mention the opposing view fairly, then respond with rebuttals. Use “Some people argue…, however…”.`;
+      }
+      if (q.includes("how many sources")) {
+        return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
+      }
+      if (q.includes("evidence")) {
+        return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
+      }
+      if (q.includes("interesting")) {
+        return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
+      }
 
-    if (q.includes("thesis")) {
-      return `Tip: A thesis is your main claim in one clear sentence. Use sentence frames like “This video argues that…” or “I believe X because…”`;
-    }
-
-    if (q.includes("3 main arguments")) {
-      return `Tip: Keep each argument to one main point. Use signposting: “First…, Second…, Finally…”.`;
-    }
-
-    if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
-      return `Tip: State the point, then add one reason and one example (real or researched).`;
-    }
-
-    if (q.includes("most useful source")) {
-      return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
-    }
-
-    if (q.includes("visual")) {
-      return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
-    }
-
-    if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
-      return `Tip: Ethos = credibility (expert/source). Pathos = emotion (story/impact). Logos = logic (facts/data). Give one example of each.`;
-    }
-
-    if (q.includes("conclude")) {
-      return `Tip: Restate your thesis, summarise your 3 points in one line, then finish with a final message or call to action.`;
-    }
-
-    if (q.includes("opening") || q.includes("introduction")) {
-      return `Tip: Start strong: a surprising fact, a question, or a quick story. Then give the outline and your thesis.`;
-    }
-
-    if (q.includes("counter-arguments") || q.includes("counter arguments") || q.includes("counterarguments")) {
-      return `Tip: Mention the opposing view fairly, then respond with rebuttals. Use “Some people argue…, however…”.`;
-    }
-
-    if (q.includes("how many sources")) {
-      return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
-    }
-
-    if (q.includes("evidence")) {
-      return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
-    }
-
-    if (q.includes("interesting")) {
-      return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
-    }
-
-    // Default fallback
-    return `Tip: Aim for 2–4 sentences. Use linking words like because, however, and therefore.`;
-  }
-</script>
-
-      // Default fallback
-      return `Tip: Aim for 2–4 sentences`;
+      return `Tip: Aim for 2–4 sentences. Use linking words like <strong>because</strong>, <strong>however</strong>, and <strong>therefore</strong>.`;
     }
 
     function pickRandomQuestion(){
       const q = questions[Math.floor(Math.random() * questions.length)];
 
-      qText.classList.remove("pop"); // restart animation
+      qText.classList.remove("pop");
       void qText.offsetWidth;
       qText.textContent = q;
       qText.classList.add("pop");
 
-      // Update tip to match the question
       tipEl.innerHTML = hintFor(q);
 
       picks++;
@@ -366,7 +346,6 @@
     pickBtn.addEventListener("click", pickRandomQuestion);
     copyBtn.addEventListener("click", copyQuestion);
 
-    // Spacebar to pick (nice for presenting)
     window.addEventListener("keydown", (e) => {
       if(e.code === "Space"){
         e.preventDefault();
@@ -376,4 +355,3 @@
   </script>
 </body>
 </html>
-

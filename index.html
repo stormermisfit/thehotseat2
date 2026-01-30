@@ -271,49 +271,67 @@
 
     let picks = 0;
 
-    function hintFor(question){
-      const q = question.toLowerCase();
+    <script>
+  function hintFor(question){
+    const q = question.toLowerCase();
 
-      // Tailored EAP-friendly tips (simple, direct, B2)
-      if (q.includes("topic")) {
-        return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
-      }
-      if (q.includes("thesis")) {
-        return `Tip: A thesis is your main claim in one clear sentence. Use suitable sentence frames;
-      }
-      if (q.includes("3 main arguments")) {
-        return `Tip: Keep each argument to one main point
-      }
-      if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
-        return `Tip: State the point, then add reasons and examples.`;
-      }
-      if (q.includes("most useful source")) {
-        return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
-      }
-      if (q.includes("visual")) {
-        return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
-      }
-      if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
-        return `Tip: Ethos = credibility (expert/source). Pathos = emotion (story/impact). Logos = logic (facts/data). Give one example of each.`;
-      }
-      if (q.includes("conclude")) {
-        return `Tip: Restate your thesis, summarise your 3 points in one line, then finish with a final message or call to action.`;
-      }
-      if (q.includes("opening") || q.includes("introduction")) {
-        return `Tip: Start strong: a surprising fact, or a quick story. Then give the outline and your thesis.`;
-      }
-      if (q.includes("counter-arguments") || q.includes("counter arguments") || q.includes("counterarguments")) {
-        return `Tip: Mention the opposing view fairly, then respond with rebuttals.`;
-      }
-      if (q.includes("how many sources")) {
-        return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
-      }
-      if (q.includes("evidence")) {
-        return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
-      }
-      if (q.includes("make your video interesting") || q.includes("interesting")) {
-        return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
-      }
+    // Tailored EAP-friendly tips (simple, direct, B2)
+    if (q.includes("topic")) {
+      return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
+    }
+
+    if (q.includes("thesis")) {
+      return `Tip: A thesis is your main claim in one clear sentence. Use sentence frames like “This video argues that…” or “I believe X because…”`;
+    }
+
+    if (q.includes("3 main arguments")) {
+      return `Tip: Keep each argument to one main point. Use signposting: “First…, Second…, Finally…”.`;
+    }
+
+    if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
+      return `Tip: State the point, then add one reason and one example (real or researched).`;
+    }
+
+    if (q.includes("most useful source")) {
+      return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
+    }
+
+    if (q.includes("visual")) {
+      return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
+    }
+
+    if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
+      return `Tip: Ethos = credibility (expert/source). Pathos = emotion (story/impact). Logos = logic (facts/data). Give one example of each.`;
+    }
+
+    if (q.includes("conclude")) {
+      return `Tip: Restate your thesis, summarise your 3 points in one line, then finish with a final message or call to action.`;
+    }
+
+    if (q.includes("opening") || q.includes("introduction")) {
+      return `Tip: Start strong: a surprising fact, a question, or a quick story. Then give the outline and your thesis.`;
+    }
+
+    if (q.includes("counter-arguments") || q.includes("counter arguments") || q.includes("counterarguments")) {
+      return `Tip: Mention the opposing view fairly, then respond with rebuttals. Use “Some people argue…, however…”.`;
+    }
+
+    if (q.includes("how many sources")) {
+      return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
+    }
+
+    if (q.includes("evidence")) {
+      return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
+    }
+
+    if (q.includes("interesting")) {
+      return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
+    }
+
+    // Default fallback
+    return `Tip: Aim for 2–4 sentences. Use linking words like because, however, and therefore.`;
+  }
+</script>
 
       // Default fallback
       return `Tip: Aim for 2–4 sentences`;
@@ -358,3 +376,4 @@
   </script>
 </body>
 </html>
+

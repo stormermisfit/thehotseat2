@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Random Question Picker</title>
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#111a33;
+      --card: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.16);
+      --text:#f2f4ff;
+      --muted:#b9c2e6;
+      --accent1:#7c5cff;
+      --accent2:#00d0ff;
+      --shadow: 0 25px 70px rgba(0,0,0,.45);
+      --radius: 24px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      padding:28px 16px;
+
+      background:
+        radial-gradient(1100px 650px at 15% 15%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(900px 600px at 80% 35%, rgba(0,208,255,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    .container{
+      width:min(920px, 100%);
+      display:grid;
+      gap:14px;
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding: 0 6px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+      letter-spacing:.2px;
+      font-weight:800;
+    }
+
+    .sub{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size: .95rem;
+      line-height:1.25;
+    }
+
+    .badge{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 650;
+      letter-spacing:.2px;
+      user-select:none;
+      white-space:nowrap;
+    }
+
+    .card{
+      position:relative;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .glow{
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(124,92,255,.22), transparent 40%),
+        radial-gradient(circle at 70% 45%, rgba(0,208,255,.16), transparent 45%);
+      filter: blur(14px);
+      pointer-events:none;
+    }
+
+    .inner{
+      position:relative;
+      padding: clamp(18px, 2.4vw, 28px);
+      display:grid;
+      gap:16px;
+    }
+
+    .label{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: var(--muted);
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      user-select:none;
+    }
+
+    .spark{
+      width:12px; height:12px;
+      border-radius:4px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
+    }
+
+    .question{
+      margin:0;
+      font-weight: 850;
+      line-height:1.12;
+      font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+      letter-spacing: .2px;
+      text-wrap: balance;
+    }
+
+    .tip{
+      margin:0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height:1.4;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 4px;
+    }
+
+    button{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .08s ease, filter .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    button:hover{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.24);
+    }
+    button:active{ transform: scale(.98); }
+
+    .primary{
+      border:none;
+      color:#07101f;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      box-shadow: 0 14px 40px rgba(0,0,0,.28);
+    }
+    .primary:hover{ filter: brightness(1.06); }
+
+    .ghost{
+      background: rgba(0,0,0,.14);
+    }
+
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding: 0 6px;
+      color: var(--muted);
+      font-size: .92rem;
+      user-select:none;
+    }
+
+    .kbd{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-weight: 750;
+      color: var(--text);
+    }
+
+    /* Cute little “shuffle” animation */
+    .pop{
+      animation: pop .22s ease;
+    }
+    @keyframes pop{
+      from { transform: translateY(6px); opacity:.65; }
+      to   { transform: translateY(0); opacity:1; }
+    }
+
+    /* Optional: respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .pop{ animation:none; }
+      button{ transition:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div>
+        <h1>EAP Video Plan: The HOT Seat </h1>
+        <p class="sub">Click to get a question. Answer clearly. Repeat until everyone survives.</p>
+      </div>
+      <div class="badge" id="counter">Picked: 0</div>
+    </div>
+
+    <section class="card" aria-live="polite">
+      <div class="glow"></div>
+
+      <div class="inner">
+        <div class="label"><span class="spark"></span> Question</div>
+
+        <p class="question" id="qText">Click “Pick a question”.</p>
+
+        <p class="tip" id="tip">
+          Tip: Aim for 2–4 sentences. Use linking words like <strong>because</strong>, <strong>however</strong>, and <strong>therefore</strong>.
+        </p>
+
+        <div class="actions">
+          <button class="primary" id="pickBtn">Pick a question</button>
+          <button class="ghost" id="copyBtn">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Keyboard: <span class="kbd">Space</span> to pick</div>
+      <div id="miniNote">The HOT Seat</div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "Which topic have you chosen?",
+      "What is your thesis?",
+      "What are your 3 main arguments?",
+      "What’s your 1st argument?",
+      "What’s your 2nd argument?",
+      "What’s your 3rd argument?",
+      "What’s your most useful source? Why?",
+      "What visuals will you show in your video?",
+      "How will you use ethos, pathos and logos?",
+      "How will you conclude your video?",
+      "What is your opening in the introduction?",
+      "What counter-arguments will you include?",
+      "How many sources will you cite?",
+      "What kinds of evidence will you provide?",
+      "How will you make your video interesting for viewers?"
+    ];
+
+    const qText = document.getElementById("qText");
+    const tipEl = document.getElementById("tip");
+    const pickBtn = document.getElementById("pickBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const counter = document.getElementById("counter");
+
+    let picks = 0;
+
+    function hintFor(question){
+      const q = question.toLowerCase();
+
+      // Tailored EAP-friendly tips (simple, direct, B2)
+      if (q.includes("topic")) {
+        return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
+      }
+      if (q.includes("thesis")) {
+        return `Tip: A thesis is your main claim in one clear sentence. Use suitable sentence frames;
+      }
+      if (q.includes("3 main arguments")) {
+        return `Tip: Keep each argument to one main point
+      }
+      if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
+        return `Tip: State the point, then add reasons and examples.`;
+      }
+      if (q.includes("most useful source")) {
+        return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
+      }
+      if (q.includes("visual")) {
+        return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
+      }
+      if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
+        return `Tip: Ethos = credibility (expert/source). Pathos = emotion (story/impact). Logos = logic (facts/data). Give one example of each.`;
+      }
+      if (q.includes("conclude")) {
+        return `Tip: Restate your thesis, summarise your 3 points in one line, then finish with a final message or call to action.`;
+      }
+      if (q.includes("opening") || q.includes("introduction")) {
+        return `Tip: Start strong: a surprising fact, or a quick story. Then give the outline and your thesis.`;
+      }
+      if (q.includes("counter-arguments") || q.includes("counter arguments") || q.includes("counterarguments")) {
+        return `Tip: Mention the opposing view fairly, then respond with rebuttals.`;
+      }
+      if (q.includes("how many sources")) {
+        return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
+      }
+      if (q.includes("evidence")) {
+        return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
+      }
+      if (q.includes("make your video interesting") || q.includes("interesting")) {
+        return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
+      }
+
+      // Default fallback
+      return `Tip: Aim for 2–4 sentences`;
+    }
+
+    function pickRandomQuestion(){
+      const q = questions[Math.floor(Math.random() * questions.length)];
+
+      qText.classList.remove("pop"); // restart animation
+      void qText.offsetWidth;
+      qText.textContent = q;
+      qText.classList.add("pop");
+
+      // Update tip to match the question
+      tipEl.innerHTML = hintFor(q);
+
+      picks++;
+      counter.textContent = `Picked: ${picks}`;
+    }
+
+    async function copyQuestion(){
+      try{
+        await navigator.clipboard.writeText(qText.textContent);
+        copyBtn.textContent = "Copied ✓";
+        setTimeout(() => copyBtn.textContent = "Copy", 900);
+      } catch {
+        copyBtn.textContent = "Copy blocked";
+        setTimeout(() => copyBtn.textContent = "Copy", 900);
+      }
+    }
+
+    pickBtn.addEventListener("click", pickRandomQuestion);
+    copyBtn.addEventListener("click", copyQuestion);
+
+    // Spacebar to pick (nice for presenting)
+    window.addEventListener("keydown", (e) => {
+      if(e.code === "Space"){
+        e.preventDefault();
+        pickRandomQuestion();
+      }
+    });
+  </script>
+</body>
+</html>

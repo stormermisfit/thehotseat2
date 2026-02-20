@@ -251,14 +251,19 @@
       "What’s your 3rd argument?",
       "What’s your most useful source? Why?",
       "What visuals will you show in your video?",
-      "How will you use ethos, pathos and logos?",
-      "What techniques are you going to use to engage your audience?",
       "How will you conclude your video?",
-      "What is your opening in the introduction?",
       "What counter-arguments will you include?",
-      "How many sources will you cite?",
-      "What kinds of evidence will you provide?",
-      "How will you make your video interesting for viewers?"
+      "How many sources have you cited?",
+      "How did you structure his essay?",
+      "Why did you choose this structure? What was the purpose of the essay?",
+      "What source did you use that was the most beneficial?",
+      "What are your main sources?",
+      "How did you find the sources?",
+      "Tell me about this source. How did you use it and why?",
+      "Discuss the quality of one of your main sources your source",
+      "What are the main arguments that influenced your thesis statement?",
+      "What information did you use from this source and how is it supporting your argument?",
+
     ];
 
     const qText = document.getElementById("qText");
@@ -276,19 +281,19 @@
         return `Tip: Name your topic in one short sentence, then add a focus (e.g., “social media and mental health in teenagers”).`;
       }
       if (q.includes("thesis")) {
-        return `Tip: A thesis is your main claim in one clear sentence. Use frames like “This video argues that…” or “I believe X because…”`;
+        return `Tip: A thesis is your main claim in one clear sentence. Use frames like “This video argues that…” or “My central arguement is…”`;
       }
       if (q.includes("3 main arguments")) {
-        return `Tip: Keep each argument to one main point. Use signposting: “First…, Second…, Finally…”.`;
+        return `Tip: Keep each argument to one main point.”.`;
       }
       if (q.includes("1st argument") || q.includes("2nd argument") || q.includes("3rd argument")) {
-        return `Tip: State the point, then add one reason and one example (real or researched).`;
+        return `Tip: State the point, then add the reasons and one examples.`;
       }
       if (q.includes("most useful source")) {
         return `Tip: Say WHY it’s useful: credible author, recent date, strong data, expert perspective, or clear explanation.`;
       }
       if (q.includes("visual")) {
-        return `Tip: Name 2 visuals and explain what each one shows (graph, image, quote on screen, short clip).`;
+        return `Tip: Name 2 visuals and explain what each one shows.`;
       }
       if (q.includes("ethos") || q.includes("pathos") || q.includes("logos")) {
         return `Tip: Ethos = credibility, Pathos = emotion, Logos = logic. Give one example of each.`;
@@ -309,13 +314,13 @@
         return `Tip: Give a number, then say what types (academic article, news, report) and how recent they are.`;
       }
       if (q.includes("evidence")) {
-        return `Tip: Use at least TWO types: statistics, expert quotes, examples/case studies, or research findings.`;
+        return `Tip: be specific: e.g. statistics, expert quotes, examples/case studies, or research findings.`;
       }
       if (q.includes("interesting")) {
         return `Tip: Mix methods: clear visuals + short sections + a story/example. Change pace every 10–15 seconds.`;
       }
 
-      return `Tip: Aim for 2–4 sentences. Use linking words like <strong>because</strong>, <strong>however</strong>, and <strong>therefore</strong>.`;
+      return `Tip: Aim for 2–4 sentences.`;
     }
 
     function pickRandomQuestion(){
@@ -355,3 +360,4 @@
   </script>
 </body>
 </html>
+
